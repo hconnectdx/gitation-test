@@ -20,11 +20,7 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-#      - name: Build app - Hospital
-#        run: mvn clean install -DskipTests
-
       - name: Extract branch name
-#        shell: bash
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
 
@@ -32,7 +28,7 @@ jobs:
         shell: bash
         run: echo ${{steps.extract_branch.outputs.branch}}
 
-      - name: build jar
+      - name: Build jar
         run: mvn clean install -DskipTests
 
       # Setting up Docker Buildx with docker-container driver is required
@@ -52,6 +48,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: gitaction-test:${{steps.extract_branch.outputs.branch}}
+          tags: poli-acr-user/gitaction-test:${{steps.extract_branch.outputs.branch}}
 
 
