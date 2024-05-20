@@ -1,0 +1,46 @@
+name: test develop
+
+on: 
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+#      - name: Build app - Hospital
+#        run: mvn clean install -DskipTests
+
+      - name: Extract branch name
+#        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
+      - name: Echo branch name (next step)
+        shell: bash
+        run: echo ${{steps.extract_branch.outputs.branch}}
+
+
+      # Get github tag & branch information
+      # Docker
+      # Container Registry
+      # Deploy
+
+#      - name: Upload artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: api
+#          path: ./target/*.jar
+
