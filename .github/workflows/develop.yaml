@@ -48,6 +48,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: poli-acr-user/gitaction-test:${{steps.extract_branch.outputs.branch}}
+          tags: poliregistrytest.azurecr.io/gitaction-test:${{steps.extract_branch.outputs.branch}}
 
 
