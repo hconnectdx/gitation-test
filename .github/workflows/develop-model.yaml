@@ -1,0 +1,55 @@
+name: test develop model
+
+on: 
+  push:
+    branches:
+      - develop
+    path:
+      - model_server/model/**
+
+jobs:
+  build:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # - name: Set up JDK
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     java-version: '17'
+      #     distribution: 'adopt'
+
+      - name: Extract branch name
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
+      - name: Echo branch name (next step)
+        shell: bash
+        run: echo ${{steps.extract_branch.outputs.branch}}
+
+      # - name: Build jar
+      #   run: mvn clean install -DskipTests
+
+      # Setting up Docker Buildx with docker-container driver is required
+      # at the moment to be able to use a subdirectory with Git context
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+
+      # - name: Docker login (Azure Container Registry)
+      #   uses: azure/docker-login@v1
+      #   with:
+      #     login-server: poliregistrytest.azurecr.io
+      #     username: ${{secrets.ACR_USERNAME}}
+      #     password: ${{secrets.ACR_PASSWORD}}
+
+      # - name: Build and push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: poliregistrytest.azurecr.io/gitaction-test:${{steps.extract_branch.outputs.branch}}
+
+
