@@ -28,8 +28,8 @@ jobs:
         shell: bash
         run: echo ${{steps.extract_branch.outputs.branch}}
 
-      # - name: Build jar
-      #   run: mvn clean install -DskipTests
+      - name: Build jar
+        run: mvn clean install -DskipTests
 
       # Setting up Docker Buildx with docker-container driver is required
       # at the moment to be able to use a subdirectory with Git context
